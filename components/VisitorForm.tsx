@@ -34,7 +34,7 @@ export default function VisitorForm({ onGenerate, onReset }: VisitorFormProps) {
     handleSubmit,
     reset,
     formState: { isValid },
-  } = useForm<VisitorFormData>({ mode: 'onChange' })
+  } = useForm<VisitorFormData>({ mode: 'all' })
 
   const onSubmit = (data: VisitorFormData) => {
     onGenerate(JSON.stringify(data))
