@@ -37,7 +37,7 @@ describe('Home', () => {
       'data-value',
       '{"test":"data"}'
     )
-    expect(screen.queryByText('入場受付 QRコード発行')).not.toBeInTheDocument()
+    expect(screen.getByText('入場受付 QRコード発行')).not.toBeVisible()
   })
 
   it('shows the Back button on the QR view', async () => {

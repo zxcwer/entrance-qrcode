@@ -180,7 +180,7 @@ describe('QRDisplay', () => {
   it('shows the instruction text when value is provided', () => {
     render(<QRDisplay value='{"lastname":"test"}' />)
     expect(
-      screen.getByText('QRコードを入口でご提示ください')
+      screen.getByText('QRコードを顔情報登録画面でご提示ください')
     ).toBeInTheDocument()
   })
 })
@@ -210,7 +210,7 @@ export default function QRDisplay({ value }: QRDisplayProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       <p className="text-sm font-medium text-gray-500">
-        QRコードを入口でご提示ください
+        QRコードを顔情報登録画面でご提示ください
       </p>
       <QRCodeSVG value={value} size={256} />
     </div>

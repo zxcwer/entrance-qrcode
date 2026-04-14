@@ -22,14 +22,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-100 flex items-start justify-center py-10 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-md flex flex-col gap-6">
-        {view === 'form' ? (
-          <>
-            <h1 className="text-center text-xl font-bold text-gray-800">
-              入場受付 QRコード発行
-            </h1>
-            <VisitorForm onGenerate={handleGenerate} onReset={() => {}} />
-          </>
-        ) : (
+        <div hidden={view === 'qr'}>
+          <h1 className="text-center text-xl font-bold text-gray-800">
+            入場受付 QRコード発行
+          </h1>
+          <VisitorForm onGenerate={handleGenerate} onReset={() => {}} />
+        </div>
+        {view === 'qr' && (
           <>
             <h1 className="text-center text-xl font-bold text-gray-800">
               QRコード
