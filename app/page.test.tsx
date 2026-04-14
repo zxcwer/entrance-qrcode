@@ -56,4 +56,16 @@ describe('Home', () => {
     expect(screen.queryByTestId('qr-display')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: '← 戻る' })).not.toBeInTheDocument()
   })
+
+  it('can generate a QR code again after returning to the form view', async () => {
+    const user = userEvent.setup()
+    render(<Home />)
+    // first cycle
+    await user.click(screen.getByText('mock-generate'))
+    await user.click(screen.getByRole('button', { name: '← 戻る' }))
+    // second cycle
+    await user.click(screen.getByText('mock-generate'))
+    expect(screen.getByText('QRコード')).toBeInTheDocument()
+    expect(screen.getByTestId('qr-display')).toHaveAttribute('data-value', '{"test":"data"}')
+  })
 })
