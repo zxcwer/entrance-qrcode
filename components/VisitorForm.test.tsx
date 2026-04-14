@@ -61,6 +61,7 @@ describe('VisitorForm', () => {
         vehicleNumber: '1234',
       })
     )
+    expect(onGenerate).toHaveBeenCalledTimes(1)
   })
 
   it('calls onReset and clears all fields when Reset is clicked', async () => {
