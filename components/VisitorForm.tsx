@@ -17,15 +17,15 @@ interface VisitorFormProps {
   onReset: () => void
 }
 
-const FIELDS: { name: keyof VisitorFormData; label: string }[] = [
+const FIELDS: { name: keyof VisitorFormData; label: string; inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'] }[] = [
   { name: 'lastname', label: '姓' },
   { name: 'firstname', label: '名' },
   { name: 'lastnameKana', label: '姓（カナ）' },
   { name: 'firstnameKana', label: '名（カナ）' },
   { name: 'company', label: '会社名' },
   { name: 'department', label: '部署' },
-  { name: 'phone', label: '電話番号' },
-  { name: 'vehicleNumber', label: '車両番号' },
+  { name: 'phone', label: '電話番号', inputMode: 'tel' },
+  { name: 'vehicleNumber', label: '車両番号', inputMode: 'numeric' },
 ]
 
 export default function VisitorForm({ onGenerate, onReset }: VisitorFormProps) {
@@ -47,7 +47,7 @@ export default function VisitorForm({ onGenerate, onReset }: VisitorFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      {FIELDS.map(({ name, label }) => (
+      {FIELDS.map(({ name, label, inputMode }) => (
         <div key={name} className="flex flex-col gap-1">
           <label
             htmlFor={name}
@@ -58,6 +58,7 @@ export default function VisitorForm({ onGenerate, onReset }: VisitorFormProps) {
           <input
             id={name}
             {...register(name, { required: true })}
+            inputMode={inputMode}
             className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
         </div>
