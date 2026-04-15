@@ -54,6 +54,11 @@ describe('QRDisplay', () => {
     vi.spyOn(HTMLCanvasElement.prototype, 'toDataURL').mockReturnValue(
       'data:image/png;base64,mock'
     )
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
+      fillStyle: '',
+      fillRect: vi.fn(),
+      drawImage: vi.fn(),
+    } as unknown as CanvasRenderingContext2D)
     const clickSpy = vi
       .spyOn(HTMLAnchorElement.prototype, 'click')
       .mockImplementation(() => {})
@@ -67,6 +72,7 @@ describe('QRDisplay', () => {
     const anchorCall = appendSpy.mock.calls.find(
       ([node]) => node instanceof HTMLAnchorElement
     )
+    expect(anchorCall).toBeDefined()
     const anchor = anchorCall![0] as HTMLAnchorElement
     expect(anchor.download).toBe('qrcode.png')
   })

@@ -12,7 +12,16 @@ export default function QRDisplay({ value }: QRDisplayProps) {
   const handleSave = () => {
     const canvas = containerRef.current?.querySelector<HTMLCanvasElement>('canvas')
     if (!canvas) return
-    const url = canvas.toDataURL('image/png')
+    const padding = 20
+    const offscreen = document.createElement('canvas')
+    offscreen.width = canvas.width + padding * 2
+    offscreen.height = canvas.height + padding * 2
+    const ctx = offscreen.getContext('2d')
+    if (!ctx) return
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, offscreen.width, offscreen.height)
+    ctx.drawImage(canvas, padding, padding)
+    const url = offscreen.toDataURL('image/png')
     const link = document.createElement('a')
     link.href = url
     link.download = 'qrcode.png'
