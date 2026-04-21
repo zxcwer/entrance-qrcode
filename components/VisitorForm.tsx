@@ -1,5 +1,5 @@
 'use client'
-import { useForm, RegisterOptions } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type VisitorFormData = {
   lastname: string
@@ -21,7 +21,9 @@ type FieldDef = {
   name: keyof VisitorFormData
   label: string
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
-  rules?: Omit<RegisterOptions<VisitorFormData>, 'required'>
+  rules?: {
+    pattern?: { value: RegExp; message: string }
+  }
 }
 
 const FIELDS: FieldDef[] = [
