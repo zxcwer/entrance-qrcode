@@ -10,7 +10,7 @@ const fillAllFields = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.type(screen.getByLabelText('名（カナ）'), 'ぼげぼげ')
   await user.type(screen.getByLabelText('会社名'), 'ABC Company')
   await user.type(screen.getByLabelText('部署'), 'DX AI')
-  await user.type(screen.getByLabelText('電話番号'), '123456789')
+  await user.type(screen.getByLabelText('電話番号'), '0312345678')
   await user.type(screen.getByLabelText('車両番号'), '1234')
 }
 
@@ -57,11 +57,26 @@ describe('VisitorForm', () => {
         firstnameKana: 'ぼげぼげ',
         company: 'ABC Company',
         department: 'DX AI',
-        phone: '123456789',
+        phone: '0312345678',
         vehicleNumber: '1234',
       })
     )
     expect(onGenerate).toHaveBeenCalledTimes(1)
+  })
+
+  it('disables the submit button when phone has fewer than 10 digits', async () => {
+    const user = userEvent.setup()
+    render(<VisitorForm onGenerate={vi.fn()} onReset={vi.fn()} />)
+    await user.type(screen.getByLabelText('姓'), 'ほげほげ')
+    await user.type(screen.getByLabelText('名'), 'ぼげぼげ')
+    await user.type(screen.getByLabelText('姓（カナ）'), 'ほげほげ')
+    await user.type(screen.getByLabelText('名（カナ）'), 'ぼげぼげ')
+    await user.type(screen.getByLabelText('会社名'), 'ABC Company')
+    await user.type(screen.getByLabelText('部署'), 'DX AI')
+    await user.type(screen.getByLabelText('電話番号'), '123456789') // 9 digits — invalid
+    await user.type(screen.getByLabelText('車両番号'), '1234')
+    expect(screen.getByRole('button', { name: 'QRコードを生成' })).toBeDisabled()
+    expect(screen.getByText('10〜11桁の数字で入力してください')).toBeInTheDocument()
   })
 
   it('calls onReset and clears all fields when Reset is clicked', async () => {
