@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 type PersonnelFormData = {
   lastname: string
   firstname: string
+  company: string
   personDepartment: string
   person: string
   stayHours: number
@@ -17,6 +18,7 @@ interface PersonnelFormProps {
 const TEXT_FIELDS: { name: keyof Omit<PersonnelFormData, 'stayHours'>; label: string }[] = [
   { name: 'lastname', label: '姓' },
   { name: 'firstname', label: '名' },
+  { name: 'company', label: '会社名' },
   { name: 'personDepartment', label: '担当者の部署' },
   { name: 'person', label: '担当者の名前' },
 ]
