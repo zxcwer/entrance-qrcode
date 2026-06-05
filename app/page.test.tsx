@@ -14,6 +14,17 @@ vi.mock('@/components/VisitorForm', () => ({
   ),
 }))
 
+vi.mock('@/components/PersonnelForm', () => ({
+  default: ({
+    onGenerate,
+  }: {
+    onGenerate: (v: string) => void
+    onReset: () => void
+  }) => (
+    <button onClick={() => onGenerate('{"personnel":"data"}')}>mock-generate-personnel</button>
+  ),
+}))
+
 vi.mock('@/components/QRDisplay', () => ({
   default: ({ value }: { value: string }) => (
     <div data-testid="qr-display" data-value={value} />
@@ -37,7 +48,7 @@ describe('Home', () => {
       'data-value',
       '{"test":"data"}'
     )
-    expect(screen.getByText('入場受付 QRコード発行')).not.toBeVisible()
+    expect(screen.queryByText('入場受付 QRコード発行')).not.toBeInTheDocument()
   })
 
   it('shows the Back button on the QR view', async () => {
@@ -67,5 +78,35 @@ describe('Home', () => {
     await user.click(screen.getByText('mock-generate'))
     expect(screen.getByText('QRコード')).toBeInTheDocument()
     expect(screen.getByTestId('qr-display')).toHaveAttribute('data-value', '{"test":"data"}')
+  })
+
+  it('switches to personnel form via hamburger menu', async () => {
+    const user = userEvent.setup()
+    render(<Home />)
+    await user.click(screen.getByRole('button', { name: 'メニュー' }))
+    await user.click(screen.getByText('担当者入力'))
+    expect(screen.getByText('担当者 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('mock-generate-personnel')).toBeInTheDocument()
+  })
+
+  it('generates QR code from personnel form', async () => {
+    const user = userEvent.setup()
+    render(<Home />)
+    await user.click(screen.getByRole('button', { name: 'メニュー' }))
+    await user.click(screen.getByText('担当者入力'))
+    await user.click(screen.getByText('mock-generate-personnel'))
+    expect(screen.getByText('QRコード')).toBeInTheDocument()
+    expect(screen.getByTestId('qr-display')).toHaveAttribute('data-value', '{"personnel":"data"}')
+  })
+
+  it('switches back to visitor form via hamburger menu', async () => {
+    const user = userEvent.setup()
+    render(<Home />)
+    await user.click(screen.getByRole('button', { name: 'メニュー' }))
+    await user.click(screen.getByText('担当者入力'))
+    await user.click(screen.getByRole('button', { name: 'メニュー' }))
+    await user.click(screen.getByText('入場受付'))
+    expect(screen.getByText('入場受付 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('mock-generate')).toBeInTheDocument()
   })
 })
