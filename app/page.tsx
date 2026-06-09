@@ -35,8 +35,8 @@ export default function Home() {
     view === 'qr'
       ? 'QRコード'
       : page === 'visitor'
-        ? '入場登録情報 QRコード発行'
-        : '入場受付 QRコード発行'
+        ? '顔認証入場登録 QRコード発行'
+        : 'QR入場登録 QRコード発行'
 
   return (
     <main className="min-h-screen bg-gray-100 flex items-start justify-center py-10 px-4">
@@ -68,7 +68,7 @@ export default function Home() {
                       page === 'visitor' ? 'font-semibold text-indigo-600' : 'text-gray-700'
                     }`}
                   >
-                    入場登録情報
+                    顔認証入場登録
                   </button>
                   <button
                     type="button"
@@ -77,7 +77,7 @@ export default function Home() {
                       page === 'personnel' ? 'font-semibold text-indigo-600' : 'text-gray-700'
                     }`}
                   >
-                    入場受付
+                    QR入場登録
                   </button>
                 </div>
               </>
