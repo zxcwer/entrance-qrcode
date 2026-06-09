@@ -34,7 +34,7 @@ vi.mock('@/components/QRDisplay', () => ({
 describe('Home', () => {
   it('shows the form view with correct title initially', () => {
     render(<Home />)
-    expect(screen.getByText('顔認証入場登録 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('顔認証入場登録')).toBeInTheDocument()
     expect(screen.queryByTestId('qr-display')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: '← 戻る' })).not.toBeInTheDocument()
   })
@@ -48,7 +48,7 @@ describe('Home', () => {
       'data-value',
       '{"test":"data"}'
     )
-    expect(screen.queryByText('顔認証入場登録 QRコード発行')).not.toBeInTheDocument()
+    expect(screen.queryByText('顔認証入場登録')).not.toBeInTheDocument()
   })
 
   it('shows the Back button on the QR view', async () => {
@@ -63,7 +63,7 @@ describe('Home', () => {
     render(<Home />)
     await user.click(screen.getByText('mock-generate'))
     await user.click(screen.getByRole('button', { name: '← 戻る' }))
-    expect(screen.getByText('顔認証入場登録 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('顔認証入場登録')).toBeInTheDocument()
     expect(screen.queryByTestId('qr-display')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: '← 戻る' })).not.toBeInTheDocument()
   })
@@ -85,7 +85,7 @@ describe('Home', () => {
     render(<Home />)
     await user.click(screen.getByRole('button', { name: 'メニュー' }))
     await user.click(screen.getByText('QR入場登録'))
-    expect(screen.getByText('QR入場登録 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('QR入場登録')).toBeInTheDocument()
     expect(screen.getByText('mock-generate-personnel')).toBeInTheDocument()
   })
 
@@ -106,7 +106,7 @@ describe('Home', () => {
     await user.click(screen.getByText('QR入場登録'))
     await user.click(screen.getByRole('button', { name: 'メニュー' }))
     await user.click(screen.getByText('顔認証入場登録'))
-    expect(screen.getByText('顔認証入場登録 QRコード発行')).toBeInTheDocument()
+    expect(screen.getByText('顔認証入場登録')).toBeInTheDocument()
     expect(screen.getByText('mock-generate')).toBeInTheDocument()
   })
 })
