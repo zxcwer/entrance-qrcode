@@ -35,8 +35,8 @@ export default function Home() {
     view === 'qr'
       ? 'QRコード'
       : page === 'visitor'
-        ? '顔認証入場登録 QRコード発行'
-        : 'QR入場登録 QRコード発行'
+        ? '顔認証入場登録'
+        : 'QR入場登録'
 
   return (
     <main className="min-h-screen bg-gray-100 flex items-start justify-center py-10 px-4">
